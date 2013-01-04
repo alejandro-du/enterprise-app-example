@@ -1,7 +1,7 @@
 enterprise-app-example
 ======================
 
-Tis is the enterprise-app Vaadin add-on example/reference application.
+This is the official enterprise-app Vaadin add-on example/reference application.
 
 Instructions
 ============
