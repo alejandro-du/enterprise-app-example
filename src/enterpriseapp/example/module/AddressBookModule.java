@@ -46,7 +46,7 @@ public class AddressBookModule implements Module, Command {
 	public boolean userCanAccess(enterpriseapp.hibernate.dto.User user) {
 		this.user = (User) user;
 		// we must return true if the given user has access to this module
-		return this.user.getReadAccess() || this.user.getModifyAccess();
+		return this.user.isReadAccess() || this.user.isModifyAccess();
 	}
 
 	@Override
@@ -66,13 +66,13 @@ public class AddressBookModule implements Module, Command {
 			// "People" menu item is selected
 			// let's create a CRUD with the helper class CrudBuilder (you can also instantiate a crud directly)
 			CrudComponent<Person> crud = new CrudBuilder<Person>(Person.class)
-				.setShowDeleteButton(user.getModifyAccess())
-				.setShowNewButton(user.getModifyAccess())
-				.setShowUpdateButton(user.getModifyAccess())
+				.setShowDeleteButton(user.isModifyAccess())
+				.setShowNewButton(user.isModifyAccess())
+				.setShowUpdateButton(user.isModifyAccess())
 				.setFieldFactory(new PersonFieldFactory()) // we can use our own FieldFactory to customize fields
 				.build();
 			
-			crud.setReadOnly(!user.getModifyAccess());
+			crud.setReadOnly(!user.isModifyAccess());
 			crud.getSplit().setSplitPosition(50);
 			crud.getTable().setPropertyFormatter(new PersonFormatter()); // use a PropertyFormatter for our table
 			crud.getTable().updateTable(); // this is needed as we have added a PropertyFormatter after CrudComponent creation
@@ -84,7 +84,7 @@ public class AddressBookModule implements Module, Command {
 			logger.info("Departments menu item selected.");
 			// "Departments" menu item is selected
 			// let's create a CRUD instantiating it directly
-			CrudComponent<Department> crud = new DepartmentCrud(user.getModifyAccess() && !Constants.dbUseCloudFoundryDatabase);
+			CrudComponent<Department> crud = new DepartmentCrud(user.isModifyAccess() && !Constants.dbUseCloudFoundryDatabase);
 			
 			// now, we add it to the MDI window
 			mdiWindow.addWorkbenchContent(crud, Constants.uiDepartments, null, true, false);

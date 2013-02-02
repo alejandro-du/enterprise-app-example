@@ -77,7 +77,7 @@ public class User extends Dto implements enterpriseapp.hibernate.dto.User {
 		this.password = password;
 	}
 
-	public boolean getConfigurationAccess() {
+	public boolean isConfigurationAccess() {
 		return configurationAccess;
 	}
 
@@ -85,7 +85,7 @@ public class User extends Dto implements enterpriseapp.hibernate.dto.User {
 		this.configurationAccess = configurationAccess;
 	}
 
-	public boolean getReadAccess() {
+	public boolean isReadAccess() {
 		return readAccess;
 	}
 
@@ -93,7 +93,7 @@ public class User extends Dto implements enterpriseapp.hibernate.dto.User {
 		this.readAccess = readAccess;
 	}
 
-	public boolean getModifyAccess() {
+	public boolean isModifyAccess() {
 		return modifyAccess;
 	}
 
@@ -101,7 +101,7 @@ public class User extends Dto implements enterpriseapp.hibernate.dto.User {
 		this.modifyAccess = modifyAccess;
 	}
 
-	public boolean getReportsAccess() {
+	public boolean isReportsAccess() {
 		return reportsAccess;
 	}
 

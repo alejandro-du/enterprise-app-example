@@ -43,7 +43,7 @@ public class ConfigurationModule implements Module, Command {
 	@Override
 	public boolean userCanAccess(enterpriseapp.hibernate.dto.User user) {
 		// we must return true if the given user has access to this module
-		return ((User) user).getConfigurationAccess();
+		return ((User) user).isConfigurationAccess();
 	}
 
 	@Override
