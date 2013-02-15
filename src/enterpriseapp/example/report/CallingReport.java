@@ -20,7 +20,7 @@ import enterpriseapp.example.dto.Department;
 import enterpriseapp.example.dto.Person;
 import enterpriseapp.example.ui.Constants;
 import enterpriseapp.ui.crud.EntityField;
-import enterpriseapp.ui.reports.AbstractReport;
+import enterpriseapp.ui.reports.PrintViewReport;
 
 /**
  * A simple report with all the entries in the address book.
@@ -28,7 +28,7 @@ import enterpriseapp.ui.reports.AbstractReport;
  * @author Alejandro Duarte
  *
  */
-public class CallingReport extends AbstractReport {
+public class CallingReport extends PrintViewReport {
 
 	private static final long serialVersionUID = 1L;
 	
