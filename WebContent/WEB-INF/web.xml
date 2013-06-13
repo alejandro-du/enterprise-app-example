@@ -3,8 +3,8 @@
 	<display-name>enterprise-app-example</display-name>
 	<session-config>
 		<!--
-			If you are using Enterprise App's AuthWindow to authenticate users, don't use session-timeout here.
-			Use app.sessionTimeout property in configuration files.
+			If you are using Enterprise App's AuthWindow to authenticate users,
+			use app.sessionTimeout property in configuration files.
 		-->
 		<session-timeout>30</session-timeout>
 	</session-config>
