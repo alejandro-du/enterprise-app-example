@@ -1,1 +1,0 @@
-enterprise-app dependencies are not provided. Download them from Vaadin Directory.

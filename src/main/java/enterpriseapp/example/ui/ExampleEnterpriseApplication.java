@@ -3,9 +3,11 @@ package enterpriseapp.example.ui;
 import java.util.ArrayList;
 
 import com.vaadin.ui.Label;
+import com.vaadin.ui.LegacyWindow;
 import com.vaadin.ui.MenuBar;
 import com.vaadin.ui.MenuBar.MenuItem;
 import com.vaadin.ui.Panel;
+import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
 import enterpriseapp.EnterpriseApplication;
@@ -48,6 +50,15 @@ public class ExampleEnterpriseApplication extends EnterpriseApplication {
 			
 			// Schedule dummy data creation job
 			DummyDataCreationJob.schedule();
+			
+		}
+		
+		if(getMainWindow() == null) {
+			// create main window
+			LegacyWindow mainWindow = new LegacyWindow(Constants.uiAppName);
+			setMainWindow(mainWindow);
+		} else {
+			getMainWindow().removeAllComponents();
 		}
 		
 		// show content according to the state of getUser()
@@ -59,37 +70,35 @@ public class ExampleEnterpriseApplication extends EnterpriseApplication {
 	}
 
 	private void showPublicContent() {
-		removeWindow(getMainWindow());
+		// add a new LoginWindow to it
+		LoginWindow loginWindow = new LoginWindow();
 		
-		// we are gonna create an empty window and add a new LoginWindow to it
-		LoginWindow emptyMainWindow = new LoginWindow();
-		Window mainWindow = new Window(Constants.uiAppName);
-		
-		mainWindow.addWindow(emptyMainWindow);
-		setMainWindow(mainWindow);
+		getMainWindow().addWindow(loginWindow);
 	}
 
 	private void showPrivateContent() {
-		removeWindow(getMainWindow());
+		getMainWindow().removeWindow((Window) getMainWindow().getWindows().toArray()[0]);
 		
 		// we will use the Enterprise Application modules feature that allows us to implement rol based access per module
 		ArrayList<Module> modules = getModules();
 		
 		// now, we create an instance of MDIWindow, initialize its content and set it to be the main window for the app
-		MDIWindow mainWindow = new MDIWindow(Constants.uiAppName, modules);
-		mainWindow.initWorkbenchContent((User) getUser(), null);
-		setMainWindow(mainWindow);
+		MDIWindow mdiWindow = new MDIWindow(modules);
+		mdiWindow.initWorkbenchContent((User) getUser(), null);
+		getMainWindow().setContent(mdiWindow);
 		
 		// we need to add a welcome tab
 		Label label = new Label(Constants.uiWelcomeMessage, Label.CONTENT_XHTML);
 		label.setSizeFull();
-		Panel panel = new Panel();
-		panel.setSizeFull();
-		panel.addComponent(label);
-		mainWindow.addWorkbenchContent(panel, Constants.uiWelcome, null, false, false);
+		VerticalLayout welcome = new VerticalLayout();
+		welcome.setSizeFull();
+		welcome.setMargin(true);
+		welcome.addComponent(label);
+		
+		mdiWindow.addWorkbenchContent(welcome, Constants.uiWelcome, null, false, false);
 		
 		// finally, let's add a "close session" option
-		mainWindow.getMenuBar().addItem(Constants.uiLogout, new MenuBar.Command() {
+		mdiWindow.getMenuBar().addItem(Constants.uiLogout, new MenuBar.Command() {
 			private static final long serialVersionUID = 1L;
 			@Override
 			public void menuSelected(MenuItem selectedItem) {

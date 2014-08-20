@@ -5,29 +5,32 @@
 		<session-timeout>30</session-timeout>
 	</session-config>
 	<context-param>
-		<description>
-		Vaadin production mode</description>
+		<description>Vaadin production mode</description>
 		<param-name>productionMode</param-name>
 		<param-value>false</param-value>
 	</context-param>
-	<!-- This listener will load properties from files (configuration.properties), initialize database connection, and set up everything -->
 	<listener>
 		<listener-class>enterpriseapp.DefaultContextListener</listener-class>
 	</listener>
+	<filter>
+		<filter-name>SessionInterceptor</filter-name>
+		<filter-class>enterpriseapp.hibernate.SessionInterceptor</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>SessionInterceptor</filter-name>
+		<url-pattern>/*</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+		<dispatcher>ERROR</dispatcher>
+	</filter-mapping>
 	<servlet>
 		<servlet-name>Enterprise Application</servlet-name>
-		<servlet-class>com.vaadin.terminal.gwt.server.ApplicationServlet</servlet-class>
+		<servlet-class>com.vaadin.server.LegacyVaadinServlet</servlet-class>
 		<init-param>
-			<description>
-			Vaadin application class to start</description>
+			<description>Vaadin application class to start</description>
 			<param-name>application</param-name>
 			<param-value>enterpriseapp.example.ui.ExampleEnterpriseApplication</param-value>
-		</init-param>
-		<init-param>
-			<description>
-			Application widgetset</description>
-			<param-name>widgetset</param-name>
-			<param-value>enterpriseapp.example.widgetset.Enterprise_app_exampleWidgetset</param-value>
 		</init-param>
 	</servlet>
 	<!-- This servlet will help with the visualization of images inside jasper reports -->

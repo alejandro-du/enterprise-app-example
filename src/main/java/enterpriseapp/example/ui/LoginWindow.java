@@ -3,8 +3,7 @@ package enterpriseapp.example.ui;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.vaadin.Application;
-
+import enterpriseapp.EnterpriseApplication;
 import enterpriseapp.example.container.ExampleContainerFactory;
 import enterpriseapp.example.container.UserContainer;
 import enterpriseapp.example.dto.User;
@@ -35,16 +34,16 @@ public class LoginWindow extends AuthWindow {
 		User user = userContainer.getByLoginAndPassword(getLoginTf().getValue().toString(), getPasswordTf().getValue().toString());
 		
 		if(user != null) {
-			login(getApplication(), user);
+			login(user);
 		} else {
 			showError();
 		}
 	}
 
-	private void login(Application application, User user) {
+	private void login(User user) {
 		logger.info("User logged: " + getLoginTf().getValue());
-		application.setUser(user);
-		application.init();
+		EnterpriseApplication.getInstance().setUser(user);
+		EnterpriseApplication.getInstance().init();
 	}
 
 	private void showError() {
